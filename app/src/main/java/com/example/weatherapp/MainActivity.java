@@ -13,6 +13,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+
 public class MainActivity extends AppCompatActivity {
 
     Button button_getCityId, button_getWeatherByCityName, button_getWeatherByCityId;
@@ -44,7 +54,47 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(MainActivity.this, "You clicked me", Toast.LENGTH_SHORT).show();
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                String url = "https://api.weatherapi.com/v1/current.json?key=fe745592cea241d9904124007252706&q=London&aqi=no\n";
+
+                JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,url,null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(MainActivity.this, "Something wrong", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                queue.add(request);
+
+// Request a string response from the provided URL.
+               /* StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                                Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, "Error occured", Toast.LENGTH_SHORT).show();
+                    }
+                });
+*/
+// Add the request to the RequestQueue.
+
+
+                //Toast.makeText(MainActivity.this, "You clicked me", Toast.LENGTH_SHORT).show();
             }
         });
 
