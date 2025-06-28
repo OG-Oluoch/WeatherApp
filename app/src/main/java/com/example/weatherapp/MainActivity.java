@@ -57,37 +57,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                CityDataService cityDataService = new CityDataService(MainActivity.this);
 
-
-                String url = "https://api.weatherapi.com/v1/current.json?key=fe745592cea241d9904124007252706&q=" +et_datainput.getText().toString();
-
-                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,url,null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        String country;
-
-                        try {
-                            JSONObject cityInfo = response.getJSONObject("location");
-                             country = cityInfo.getString("country");
-
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                        Toast.makeText(MainActivity.this, "The country is "+country, Toast.LENGTH_SHORT).show();
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Toast.makeText(MainActivity.this, "Something wrong", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-                TheSingleton.getInstance(MainActivity.this).addToRequestQueue(request);
+              String cityID = CityDataService.getCountryName(et_datainput.getText().toString());
             }
         });
 
