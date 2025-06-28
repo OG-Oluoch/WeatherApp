@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Instantiate the RequestQueue.
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                String url = "https://api.weatherapi.com/v1/current.json?key=fe745592cea241d9904124007252706&q=Sydney";
+
+
+                String url = "https://api.weatherapi.com/v1/current.json?key=fe745592cea241d9904124007252706&q=" +et_datainput.getText().toString();
 
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,url,null, new Response.Listener<JSONObject>() {
                     @Override
@@ -87,27 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                queue.add(request);
-
-// Request a string response from the provided URL.
-               /* StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                                Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error occured", Toast.LENGTH_SHORT).show();
-                    }
-                });
-*/
-// Add the request to the RequestQueue.
-
-
-                //Toast.makeText(MainActivity.this, "You clicked me", Toast.LENGTH_SHORT).show();
+                TheSingleton.getInstance(MainActivity.this).addToRequestQueue(request);
             }
         });
 
