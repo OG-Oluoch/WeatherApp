@@ -23,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,13 +59,23 @@ public class MainActivity extends AppCompatActivity {
 
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                String url = "https://api.weatherapi.com/v1/current.json?key=fe745592cea241d9904124007252706&q=London&aqi=no\n";
+                String url = "https://api.weatherapi.com/v1/current.json?key=fe745592cea241d9904124007252706&q=Sydney&aqi=no\n";
 
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,url,null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                        String country;
+
+                        try {
+                            JSONObject cityInfo = response.getJSONObject("location");
+                             country = cityInfo.getString("country");
+
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        Toast.makeText(MainActivity.this, "The country is "+country, Toast.LENGTH_SHORT).show();
 
                     }
                 }, new Response.ErrorListener() {
