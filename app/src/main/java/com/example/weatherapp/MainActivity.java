@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                String url = "https://api.weatherapi.com/v1/current.json?key=fe745592cea241d9904124007252706&q=Sydney&aqi=no\n";
+                String url = "https://api.weatherapi.com/v1/current.json?key=fe745592cea241d9904124007252706&q=Sydney";
 
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,url,null, new Response.Listener<JSONObject>() {
                     @Override
